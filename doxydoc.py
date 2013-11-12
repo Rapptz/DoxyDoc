@@ -22,6 +22,12 @@ def get_function_args(fn_str):
     # Remove cv-qualifiers
     fn_str = re.sub(r"(?:const|volatile)\s*", "", fn_str)
 
+    # Remove namespaces
+    fn_str = re.sub(r"\w+::", "", fn_str)
+
+    # Remove template arguments in types
+    fn_str = re.sub(r"([a-zA-Z_]\w*)\s*<.+>", "\\1", fn_str)
+
     result = []
     for arg in fn_str.split(','):
         m = re.search(r"(?P<type>[a-zA-Z_]\w*)\s*(?P<name>[a-zA-Z_]\w*)", arg)
