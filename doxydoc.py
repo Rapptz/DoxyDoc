@@ -27,7 +27,13 @@ def get_function_args(fn_str):
     fn_str = re.sub(r"\w+::", "", fn_str)
 
     # Remove template arguments in types
-    fn_str = re.sub(r"([a-zA-Z_]\w*)\s*<.+>", "\\1", fn_str)
+    fn_str = re.sub(r"([a-zA-Z_]\w*)\s*<.+>", r"\1", fn_str)
+
+    # Remove parentheses
+    fn_str = re.sub(r"\((.*)\)", r"\1", fn_str)
+
+    # Remove arrays
+    fn_str = re.sub(r"\[.*\]", "", fn_str)
 
     result = []
     for arg in fn_str.split(','):
@@ -45,7 +51,7 @@ class DoxydocCommand(sublime_plugin.TextCommand):
             "templates": r"\s*template\s*<(.+)>\s*",
             "class": r"\s*(?:class|struct)\s*" + identifier + r"\s*{?",
             "function": function_identifiers + r"(?P<return>(?:typename\s*)?[\w:<>]+)?\s*(?P<subname>[A-Za-z_]\w*::)?"
-                                               r"(?P<name>operator\s*.{1,2}|[A-Za-z_:]\w*)\s*\((?P<args>[:<>,.*&\w\s]*)\).+"
+                                               r"(?P<name>operator\s*.{1,2}|[A-Za-z_:]\w*)\s*\((?P<args>[:<>\[\]\(\),.*&\w\s]*)\).+"
         }
 
     def write(self, view, string):
