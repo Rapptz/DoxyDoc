@@ -16,8 +16,9 @@ def read_line(view, point):
     return view.substr(next_line)
 
 def get_function_args(fn_str):
-    # Remove references
+    # Remove references and pointers
     fn_str = fn_str.replace("&", "")
+    fn_str = fn_str.replace("*", "")
 
     # Remove cv-qualifiers
     fn_str = re.sub(r"(?:const|volatile)\s*", "", fn_str)
@@ -44,7 +45,7 @@ class DoxydocCommand(sublime_plugin.TextCommand):
             "templates": r"\s*template\s*<(.+)>\s*",
             "class": r"\s*(?:class|struct)\s*" + identifier + r"\s*{?",
             "function": function_identifiers + r"(?P<return>(?:typename\s*)?[\w:<>]+)?\s*(?P<subname>[A-Za-z_]\w*::)?"
-                                               r"(?P<name>operator\s*.{1,2}|[A-Za-z_:]\w*)\s*\((?P<args>[:<>,.&\w\s]*)\).+"
+                                               r"(?P<name>operator\s*.{1,2}|[A-Za-z_:]\w*)\s*\((?P<args>[:<>,.*&\w\s]*)\).+"
         }
 
     def write(self, view, string):
