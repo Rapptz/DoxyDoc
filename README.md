@@ -26,6 +26,18 @@ Along with automatically generating documentation, DoxyDoc allows autocompletion
 a list of them by pressing `@` and a list will pop up automatically. Pressing Enter or Tab will insert the text for you, these
 work just like regular Sublime Text snippets.
 
+## Issues and Limitations
+
+C++ is notoriously hard to parse, so it'll be insane to say that this so-called parser is perfect as it is far from it. 
+Occasional bugs are sure to pop up every so often, which is why I made this to be as simple as possible. Since the "parser" is
+essentially a bunch of regex under the hood, some abnormalities are bound to pop up because I chose to take part in two
+problems rather than one. 
+
+Limitations are mostly involving template parameters and some complex functions. I also haven't tried function pointers in
+function arguments, so that will most likely be faulty as well. You are free to open up an issue in the issue
+tracker if you believe the bug is too severe or it ruins your flow. You're also welcome to submit a patch yourself to fix the
+functionality. :)
+
 ## Todo
 
 - Allow configuration of options. Some examples:
@@ -34,6 +46,3 @@ work just like regular Sublime Text snippets.
     - Indentation choice
 - Support other types of comments such as /// and //!
 - Variable documentation
-
-Patches are welcome.
-
