@@ -2,6 +2,8 @@ import sublime, sublime_plugin
 import re
 
 def get_template_args(templates):
+    # Strip decltype statements
+    templates = re.sub(r"decltype\(.+\)", "", templates)
     # Strip default parameters
     templates = re.sub(r"\s*=\s*.+,", ",", templates)
     # Strip type from template
