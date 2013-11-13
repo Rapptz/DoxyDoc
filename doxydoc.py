@@ -177,7 +177,6 @@ class DoxydocCommand(sublime_plugin.TextCommand):
 
         snippet += "\n * @brief ${{{0}:[brief description]}}\n * @details ${{{1}:[long description]}}\n * ".format(index, index + 1)
         index += 2
-        param_snippet = ""
 
         # Function arguments
         args = regex_obj.group("args")
@@ -187,14 +186,12 @@ class DoxydocCommand(sublime_plugin.TextCommand):
             for type, name in args:
                 if type in template_args:
                     template_args.remove(type)
-                param_snippet += "\n * @param {0} ${{{1}:[description]}}".format(name, index)
+                snippet += "\n * @param {0} ${{{1}:[description]}}".format(name, index)
                 index += 1
 
         for arg in template_args:
             snippet += "\n * @tparam {0} ${{{1}:[description]}}".format(arg, index)
             index += 1
-
-        snippet += param_snippet
 
         return_type = regex_obj.group("return")
 
