@@ -188,7 +188,7 @@ class DoxydocCommand(sublime_plugin.TextCommand):
             snippet += "\n * @tparam {0} ${{{1}:[description]}}".format(arg, index)
             index += 1
 
-        snippet += "\n * " + param_snippet
+        snippet += param_snippet
 
         return_type = regex_obj.group("return")
 
