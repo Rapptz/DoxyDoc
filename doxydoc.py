@@ -35,9 +35,19 @@ def get_function_args(fn_str):
     # Remove arrays
     fn_str = re.sub(r"\[.*\]", "", fn_str)
 
+    arg_regex = r"(?P<type>[a-zA-Z_]\w*)\s*(?P<name>[a-zA-Z_]\w*)"
+
+    if ',' not in fn_str:
+        if ' ' not in fn_str:
+            return [("void", None)]
+        else:
+            m = re.search(arg_regex, fn_str)
+            if m and m.group("type"):
+                return [(m.group("type"), m.group("name"))]
+
     result = []
     for arg in fn_str.split(','):
-        m = re.search(r"(?P<type>[a-zA-Z_]\w*)\s*(?P<name>[a-zA-Z_]\w*)", arg)
+        m = re.search(arg_regex, arg)
         if m and m.group('type'):
             result.append( (m.group('type'), m.group('name')) )
 
