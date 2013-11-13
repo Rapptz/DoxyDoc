@@ -15,6 +15,10 @@
     { "trigger": "@bug",           "contents": "@bug ${1:[bug-text]}"},
     { "trigger": "@details",       "contents": "@details ${1:[detailed-text]}"},
     { "trigger": "@warning",       "contents": "@warning ${1:[warning-message]}"},
-    { "trigger": "@todo",          "contents": "@todo ${1:[todo-text]}"}
+    { "trigger": "@todo",          "contents": "@todo ${1:[todo-text]}"},
+    { "trigger": "@defgroup",      "contents": "@defgroup ${1:[group-name]} ${2:[group-title]}"},
+    { "trigger": "@ingroup",       "contents": "@ingroup ${1:[group-name]...}"},
+    { "trigger": "@addtogroup",    "contents": "@addtogroup ${1:[group-name]} ${2:[group-title]}"},
+    { "trigger": "@weakgroup",     "contents": "@weakgroup ${1:[group-name]} ${2:[group-title]}"}
   ]
 }
