@@ -11,6 +11,8 @@ There are no plans to support other languages as DocBlockr does this job fairly 
 
 Currently the only way to install this is through running `git clone` of this repository in your package directory.
 
+The command to do so is the following:
+
     git clone https://github.com/Rapptz/doxydoc.git DoxyDoc
 
 ## Usage
@@ -31,7 +33,6 @@ work just like regular Sublime Text snippets.
     - Ability to insert @author tags in the snippets
     - Indentation choice
 - Support other types of comments such as /// and //!
-- Multi-line function parsing
 - Variable documentation
 
 Patches are welcome.

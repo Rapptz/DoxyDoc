@@ -78,6 +78,7 @@ class DoxydocCommand(sublime_plugin.TextCommand):
 
     def retrieve_snippet(self, view):
         point = view.sel()[0].begin()
+        max_lines = 5 # maximum amount of lines to parse functions with
         current_line = read_line(view, point)
         if not current_line or current_line.find("/**") == -1:
             # Strange bug.. 
@@ -98,8 +99,18 @@ class DoxydocCommand(sublime_plugin.TextCommand):
             template_args = get_template_args(retempl.group(1))
             point += len(next_line) + 1
             second_line = read_line(view, point)
+            function_line = read_line(view, point)
+            function_point = point + len(function_line) + 1
 
-            refun = re.search(self.regexp["function"], second_line)
+            for x in range(0, max_lines + 1):
+                line = read_line(view, function_point)
+
+                if not line:
+                    break
+                function_line += line
+                function_point += len(line) + 1
+
+            refun = re.search(self.regexp["function"], function_line)
 
             if refun:
                 return self.template_function_snippet(refun, template_args)
@@ -109,7 +120,19 @@ class DoxydocCommand(sublime_plugin.TextCommand):
             if reclass:
                 return self.template_snippet(template_args)
 
-        regex_function = re.search(self.regexp["function"], next_line)
+        function_lines = ''.join(next_line) # make a copy
+        function_point = point + len(next_line) + 1
+
+        for x in range(0, max_lines + 1):
+            line = read_line(view, function_point)
+
+            if not line:
+                break
+
+            function_lines += line
+            function_point += len(line) + 1
+
+        regex_function = re.search(self.regexp["function"], function_lines)
 
         if regex_function:
             return self.function_snippet(regex_function)
