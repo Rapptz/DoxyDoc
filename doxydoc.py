@@ -74,7 +74,7 @@ class DoxydocCommand(sublime_plugin.TextCommand):
         if snippet:
             self.write(self.view, snippet)
         else:
-            print "unable to print snippet"
+            sublime.status_message("DoxyDoc: Unable to retrieve snippet")
 
     def retrieve_snippet(self, view):
         point = view.sel()[0].begin()
