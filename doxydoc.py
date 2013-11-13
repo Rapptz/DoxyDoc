@@ -91,6 +91,10 @@ class DoxydocCommand(sublime_plugin.TextCommand):
         if not next_line:
             return "\n * ${0}\n */"
 
+        # if the next line is already a comment, no need to reparse
+        if re.search(r"^\s*\*", next_line):
+            return "\n * "
+
         retempl = re.search(self.regexp["templates"], next_line)
 
         if retempl:
