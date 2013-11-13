@@ -40,7 +40,7 @@ def get_function_args(fn_str):
 
     if ',' not in fn_str:
         if ' ' not in fn_str:
-            return [("void", None)]
+            return [("void", "")]
         else:
             m = re.search(arg_regex, fn_str)
             if m and m.group("type"):
@@ -80,7 +80,7 @@ class DoxydocCommand(sublime_plugin.TextCommand):
 
     def retrieve_snippet(self, view):
         point = view.sel()[0].begin()
-        max_lines = 5 # maximum amount of lines to parse functions with
+        max_lines = 25 # maximum amount of lines to parse functions with
         current_line = read_line(view, point)
         if not current_line or current_line.find("/**") == -1:
             # Strange bug.. 
