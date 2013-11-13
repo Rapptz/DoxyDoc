@@ -59,8 +59,10 @@ class DoxydocCommand(sublime_plugin.TextCommand):
         self.regexp = {
             "templates": r"\s*template\s*<(.+)>\s*",
             "class": r"\s*(?:class|struct)\s*" + identifier + r"\s*{?",
-            "function": function_identifiers + r"(?P<return>(?:typename\s*)?[\w:<>]+)?\s*(?P<subname>[A-Za-z_]\w*::)?"
-                                               r"(?P<name>operator\s*.{1,2}|[A-Za-z_:]\w*)\s*\((?P<args>[:<>\[\]\(\),.*&\w\s]*)\).+"
+            "function": function_identifiers + r"(?P<return>(?:typename\s*)?[\w:<>]+)?\s*"
+                                               r"(?P<subname>[A-Za-z_]\w*::)?"
+                                               r"(?P<name>operator\s*.{1,2}|[A-Za-z_:]\w*)\s*"
+                                               r"\((?P<args>[:<>\[\]\(\),.*&\w\s]*)\).+"
         }
 
     def write(self, view, string):
