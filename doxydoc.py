@@ -4,9 +4,8 @@ import re
 def get_template_args(templates):
     # Strip default parameters
     templates = re.sub(r"\s*=\s*.+,", ",", templates)
-    # Strip typename or class identifiers and split based on commas
-    # Effectively removing anonymous typenames in the process.
-    return re.split(r",\s*", re.sub(r"(?:typename|class)\.*\s*", "", templates))
+    # Strip type from template
+    return re.split(r",\s*", re.sub(r"[A-Za-z_][\w.<>]*\s+([A-Za-z_][\w.<>]*)", r"\1", templates))
 
 def read_line(view, point):
     if (point >= view.size()):
