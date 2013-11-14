@@ -4,7 +4,19 @@
             { "key": "setting.auto_indent", "operator": "equal",          "operand": true },
             { "key": "preceding_text",      "operator": "regex_contains", "operand": "^\\s*\\/\\*{2}$", "match_all": true }
         ]
-    },    
+    },
+    { "keys": ["keypad_enter"], "command": "doxydoc", "context" :
+        [
+            { "key": "setting.auto_indent", "operator": "equal",          "operand": true },
+            { "key": "preceding_text",      "operator": "regex_contains", "operand": "^\\s*\\/\\*{2}$", "match_all": true }
+        ]
+    },
+    { "keys": ["tab"], "command": "doxydoc", "context" :
+        [
+            { "key": "setting.auto_indent", "operator": "equal",          "operand": true },
+            { "key": "preceding_text",      "operator": "regex_contains", "operand": "^\\s*\\/\\*{2}$", "match_all": true }
+        ]
+    },
     { "keys": ["enter"], "command": "insert_snippet", "args": {"contents": "\n${TM_CURRENT_LINE/^\\s*(\\*\\s*).*$/$1/}"}, "context": 
         [
             { "key": "setting.auto_indent",   "operator": "equal",          "operand": true,              "match_all": true },
