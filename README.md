@@ -15,7 +15,7 @@ The easy way to install this is through Package Control.
 - Type "install" without quotes to get to Package Control: Install Package
 - Type "DoxyDoc" without quotes and you'll see this package.
 
-Currently the only way to install this is through running `git clone` of this repository in your package directory.
+Another way to install this is through running `git clone` of this repository in your package directory.
 
 The command to do so is the following:
 
@@ -80,7 +80,6 @@ functionality. :)
 ## Todo
 
 - Allow configuration of options. Some examples:
-    - @ vs \ for Doxygen commands
     - Ability to insert @author tags in the snippets
     - Indentation choice
 - Support other types of comments such as /// and //!
