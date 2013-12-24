@@ -19,6 +19,26 @@
     { "trigger": "@defgroup",      "contents": "@defgroup ${1:[group-name]} ${2:[group-title]}"},
     { "trigger": "@ingroup",       "contents": "@ingroup ${1:[group-name]...}"},
     { "trigger": "@addtogroup",    "contents": "@addtogroup ${1:[group-name]} ${2:[group-title]}"},
-    { "trigger": "@weakgroup",     "contents": "@weakgroup ${1:[group-name]} ${2:[group-title]}"}
+    { "trigger": "@weakgroup",     "contents": "@weakgroup ${1:[group-name]} ${2:[group-title]}"},
+
+
+    { "trigger": "\\author",        "contents": "\\author ${1:[author]}"},
+    { "trigger": "\\deprecated",    "contents": "\\deprecated ${1:[deprecated-text]}"},
+    { "trigger": "\\exception",     "contents": "\\exception ${1:[exception-object]} ${2:[description]}"},
+    { "trigger": "\\param",         "contents": "\\param ${1:[parameter-name]} ${2:[description]}"},
+    { "trigger": "\\return",        "contents": "\\return ${1:[description]}"},
+    { "trigger": "\\see",           "contents": "\\see ${1:[reference]}"},
+    { "trigger": "\\since",         "contents": "\\since ${1:[since-text]}"},
+    { "trigger": "\\throws",        "contents": "\\throws ${1:[exception-object]} ${2:[description]}"},
+    { "trigger": "\\version",       "contents": "\\version ${1:[version-text]}"},
+    { "trigger": "\\code",          "contents": "\\code \n* ${0:[text]}\n* \\endcode"},
+    { "trigger": "\\bug",           "contents": "\\bug ${1:[bug-text]}"},
+    { "trigger": "\\details",       "contents": "\\details ${1:[detailed-text]}"},
+    { "trigger": "\\warning",       "contents": "\\warning ${1:[warning-message]}"},
+    { "trigger": "\\todo",          "contents": "\\todo ${1:[todo-text]}"},
+    { "trigger": "\\defgroup",      "contents": "\\defgroup ${1:[group-name]} ${2:[group-title]}"},
+    { "trigger": "\\ingroup",       "contents": "\\ingroup ${1:[group-name]...}"},
+    { "trigger": "\\addtogroup",    "contents": "\\addtogroup ${1:[group-name]} ${2:[group-title]}"},
+    { "trigger": "\\weakgroup",     "contents": "\\weakgroup ${1:[group-name]} ${2:[group-title]}"}
   ]
 }
