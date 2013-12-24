@@ -74,7 +74,11 @@ class DoxydocCommand(sublime_plugin.TextCommand):
             "function": function_identifiers + r"(?P<return>(?:typename\s*)?[\w:<>]+)?\s*"
                                                r"(?P<subname>[A-Za-z_]\w*::)?"
                                                r"(?P<name>operator\s*.{1,2}|[A-Za-z_:]\w*)\s*"
-                                               r"\((?P<args>[:<>\[\]\(\),.*&\w\s]*)\).+"
+                                               r"\((?P<args>[:<>\[\]\(\),.*&\w\s]*)\).+",
+
+            "constructor": function_identifiers + r"(?P<return>)" # dummy so it doesn't error out
+                                                  r"~?(?P<name>[a-zA-Z_]\w*)(?:\:\:[a-zA-Z_]\w*)?"
+                                                  r"\((?P<args>[:<>\[\]\(\),.*&\w\s]*)\).+"
         }
 
     def write(self, view, string):
@@ -83,7 +87,6 @@ class DoxydocCommand(sublime_plugin.TextCommand):
     def run(self, edit, mode = None):
         if setting("enabled", True):
             self.set_up()
-            print(self.command_type)
             snippet = self.retrieve_snippet(self.view)
             if snippet:
                 self.write(self.view, snippet)
@@ -128,11 +131,19 @@ class DoxydocCommand(sublime_plugin.TextCommand):
                 function_line += line
                 function_point += len(line) + 1
 
+            # Check if it's a templated constructor or destructor
+            reconstr = re.match(self.regexp["constructor"], function_line)
+
+            if reconstr:
+                return self.template_function_snippet(reconstr, template_args)
+
+            # Check if it's a templated function
             refun = re.search(self.regexp["function"], function_line)
 
             if refun:
                 return self.template_function_snippet(refun, template_args)
 
+            # Check if it's a templated class
             reclass = re.search(self.regexp["class"], second_line)
 
             if reclass:
@@ -150,13 +161,18 @@ class DoxydocCommand(sublime_plugin.TextCommand):
             function_lines += line
             function_point += len(line) + 1
 
-        regex_function = re.search(self.regexp["function"], function_lines)
+        # Check if it's a regular constructor or destructor
+        regex_constructor = re.match(self.regexp["constructor"], function_lines)
+        if regex_constructor:
+            return self.function_snippet(regex_constructor)
 
+        # Check if it's a regular function
+        regex_function = re.search(self.regexp["function"], function_lines)
         if regex_function:
             return self.function_snippet(regex_function)
 
+        # Check if it's a regular class
         regex_class = re.search(self.regexp["class"], next_line)
-
         if regex_class:
             # Regular class
             return self.regular_snippet()
