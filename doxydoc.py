@@ -1,6 +1,15 @@
 import sublime, sublime_plugin
 import re
 
+def get_settings():
+    return sublime.load_settings("DoxyDoc.sublime-settings")
+
+
+def get_setting(key, default=None):
+    return get_settings().get(key, default)
+
+setting = get_setting
+
 def get_template_args(templates):
     # Strip decltype statements
     templates = re.sub(r"decltype\(.+\)", "", templates)
@@ -71,12 +80,13 @@ class DoxydocCommand(sublime_plugin.TextCommand):
         view.run_command("insert_snippet", {"contents": string })
 
     def run(self, edit, mode = None):
-        self.set_up()
-        snippet = self.retrieve_snippet(self.view)
-        if snippet:
-            self.write(self.view, snippet)
-        else:
-            sublime.status_message("DoxyDoc: Unable to retrieve snippet")
+        if setting("enabled", True):
+            self.set_up()
+            snippet = self.retrieve_snippet(self.view)
+            if snippet:
+                self.write(self.view, snippet)
+            else:
+                sublime.status_message("DoxyDoc: Unable to retrieve snippet")
 
     def retrieve_snippet(self, view):
         point = view.sel()[0].begin()
