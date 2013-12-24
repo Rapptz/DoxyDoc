@@ -1,5 +1,5 @@
 {
-  "scope": "source.c++,source.c comment.block.documentation",
+  "scope": "source.c++ comment.block.c",
   "completions":
   [
     { "trigger": "@author",        "contents": "@author ${1:[author]}"},
