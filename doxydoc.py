@@ -241,12 +241,13 @@ class DoxydocCommand(sublime_plugin.TextCommand):
             index += 1
 
         snippet += ("\n * {0}brief ${{{1}:[brief description]}}"
-                    "\n * {0}details ${{{2}:[long description]}}\n * ".format(self.command_type, index, index + 1))
+                    "\n * {0}details ${{{2}:[long description]}}".format(self.command_type, index, index + 1))
         index += 2
 
         args = regex_obj.group("args")
 
         if args and args != "void":
+            snippet += "\n * "
             args = get_function_args(args)
             for _, name in args:
                 snippet += "\n * {0}param {1} ${{{2}:[description]}}".format(self.command_type, name, index)
@@ -255,6 +256,8 @@ class DoxydocCommand(sublime_plugin.TextCommand):
         return_type = regex_obj.group("return")
 
         if return_type and return_type != "void":
+            if index == 5:
+                snippet += "\n * "
             snippet += "\n * {0}return ${{{1}:[description]}}".format(self.command_type, index)
 
         snippet += "\n */"
