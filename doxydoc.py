@@ -67,6 +67,7 @@ class DoxydocCommand(sublime_plugin.TextCommand):
     def set_up(self):
         identifier =  r"([a-zA-Z_]\w*)"
         function_identifiers = r"\s*(?:(?:inline|static|constexpr|friend|virtual|explicit|\[\[.+\]\])\s+)*"
+        self.command_type = '@' if setting("javadoc", True) else '\\'
         self.regexp = {
             "templates": r"\s*template\s*<(.+)>\s*",
             "class": r"\s*(?:class|struct)\s*" + identifier + r"\s*{?",
@@ -82,6 +83,7 @@ class DoxydocCommand(sublime_plugin.TextCommand):
     def run(self, edit, mode = None):
         if setting("enabled", True):
             self.set_up()
+            print(self.command_type)
             snippet = self.retrieve_snippet(self.view)
             if snippet:
                 self.write(self.view, snippet)
@@ -164,15 +166,17 @@ class DoxydocCommand(sublime_plugin.TextCommand):
 
 
     def regular_snippet(self):
-        snippet = "\n * @brief ${1:[brief description]}\n * @details ${2:[long description]}\n * \n */"
+        snippet = ("\n * {0}brief ${{1:[brief description]}}"
+                   "\n * {0}details ${{2:[long description]}}\n * \n */".format(self.command_type))
         return snippet
 
     def template_snippet(self, template_args):
-        snippet = "\n * @brief ${1:[brief description]}\n * @details ${2:[long description]}\n * "
+        snippet = ("\n * {0}brief ${{1:[brief description]}}"
+                   "\n * {0}details ${{2:[long description]}}\n * ".format(self.command_type))
 
         index = 3
         for x in template_args:
-            snippet += "\n * @tparam {0} ${{{1}:[description]}}".format(x, index)
+            snippet += "\n * {0}tparam {1} ${{{2}:[description]}}".format(self.command_type, x, index)
             index += 1
 
         snippet += "\n */"
@@ -182,10 +186,11 @@ class DoxydocCommand(sublime_plugin.TextCommand):
         snippet = ""
         index = 1
         if "friend " in regex_obj.group(0):
-            snippet = "\n * @relates ${1:[class name]}"
+            snippet = "\n * {0}relates ${{1:[class name]}}".format(self.command_type)
             index += 1
 
-        snippet += "\n * @brief ${{{0}:[brief description]}}\n * @details ${{{1}:[long description]}}\n * ".format(index, index + 1)
+        snippet += ("\n * {0}brief ${{{1}:[brief description]}}"
+                    "\n * {0}details ${{{2}:[long description]}}\n * ".format(self.command_type, index, index + 1))
         index += 2
 
         # Function arguments
@@ -196,17 +201,17 @@ class DoxydocCommand(sublime_plugin.TextCommand):
             for type, name in args:
                 if type in template_args:
                     template_args.remove(type)
-                snippet += "\n * @param {0} ${{{1}:[description]}}".format(name, index)
+                snippet += "\n * {0}param {1} ${{{2}:[description]}}".format(self.command_type, name, index)
                 index += 1
 
         for arg in template_args:
-            snippet += "\n * @tparam {0} ${{{1}:[description]}}".format(arg, index)
+            snippet += "\n * {0}tparam {1} ${{{2}:[description]}}".format(self.command_type, arg, index)
             index += 1
 
         return_type = regex_obj.group("return")
 
         if return_type and return_type != "void":
-            snippet += "\n * @return ${{{0}:[description]}}".format(index)
+            snippet += "\n * {0}return ${{{1}:[description]}}".format(self.command_type, index)
 
         snippet += "\n */"
         return snippet
@@ -216,10 +221,11 @@ class DoxydocCommand(sublime_plugin.TextCommand):
         index = 1
         snippet = ""
         if "friend " in fn:
-            snippet += "\n * @relates ${1:[class name]}"
+            snippet += "\n * {0}relates ${{1:[class name]}}".format(self.command_type)
             index += 1
 
-        snippet += "\n * @brief ${{{0}:[brief description]}}\n * @details ${{{1}:[long description]}}\n * ".format(index, index + 1)
+        snippet += ("\n * {0}brief ${{{1}:[brief description]}}"
+                    "\n * {0}details ${{{2}:[long description]}}\n * ".format(self.command_type, index, index + 1))
         index += 2
 
         args = regex_obj.group("args")
@@ -227,13 +233,13 @@ class DoxydocCommand(sublime_plugin.TextCommand):
         if args and args != "void":
             args = get_function_args(args)
             for _, name in args:
-                snippet += "\n * @param {0} ${{{1}:[description]}}".format(name, index)
+                snippet += "\n * {0}param {1} ${{{2}:[description]}}".format(self.command_type, name, index)
                 index += 1
 
         return_type = regex_obj.group("return")
 
         if return_type and return_type != "void":
-            snippet += "\n * @return ${{{0}:[description]}}".format(index)
+            snippet += "\n * {0}return ${{{1}:[description]}}".format(self.command_type, index)
 
         snippet += "\n */"
         return snippet    
