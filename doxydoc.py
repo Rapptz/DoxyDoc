@@ -209,11 +209,7 @@ class DoxydocCommand(sublime_plugin.TextCommand):
     def template_function_snippet(self, regex_obj, template_args):
         snippet = ""
         index = 1
-        if "friend " in regex_obj.group(0):
-            snippet = "\n * {0}relates ${{1:[class name]}}".format(self.command_type)
-            index += 1
-
-        snippet += ("\n * {0}brief ${{{1}:[brief description]}}"
+        snippet =  ("\n * {0}brief ${{{1}:[brief description]}}"
                     "\n * {0}details ${{{2}:[long description]}}\n * ".format(self.command_type, index, index + 1))
         index += 2
 
@@ -243,12 +239,7 @@ class DoxydocCommand(sublime_plugin.TextCommand):
     def function_snippet(self, regex_obj):
         fn = regex_obj.group(0)
         index = 1
-        snippet = ""
-        if "friend " in fn:
-            snippet += "\n * {0}relates ${{1:[class name]}}".format(self.command_type)
-            index += 1
-
-        snippet += ("\n * {0}brief ${{{1}:[brief description]}}"
+        snippet =  ("\n * {0}brief ${{{1}:[brief description]}}"
                     "\n * {0}details ${{{2}:[long description]}}".format(self.command_type, index, index + 1))
         index += 2
 

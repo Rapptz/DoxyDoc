@@ -1,6 +1,6 @@
 ## DoxyDoc
 
-DoxyDoc is a plug-in that allows you to auto-complete doc block comments for C++ using Doxygen. Inspired by 
+DoxyDoc is a plug-in that allows you to auto-complete doc block comments for C++ using Doxygen. Inspired by
 [PhpDoc](https://github.com/SublimeText/PhpDoc) and [DocBlockr](https://github.com/spadgos/sublime-jsdocs) this was made due
 to frustrations due to lack of proper C++ support from DocBlockr. The latter plug-in had no capabilities to parse templated
 functions or classes and would just leave the comment hanging.
@@ -24,7 +24,7 @@ The command to do so is the following:
 ## Usage
 
 Just like DocBlockr, pressing `/**` and then enter or tab would automatically insert the corresponding documentation.
-There are no keyboard shortcuts to memorise. 
+There are no keyboard shortcuts to memorise.
 
 ![](http://rapptz.github.io/doxydoc/images/comment-complete.gif)
 
@@ -48,10 +48,6 @@ DoxyDoc also supports adding the `@return` property if the return value is not v
 
 ![](http://rapptz.github.io/doxydoc/images/function4.gif)
 
-`friend` functions will also add the `@relates` property for you.
-
-![](http://rapptz.github.io/doxydoc/images/friendfunction.gif)
-
 DoxyDoc also supports basic documenting of class names, templated or not.
 
 ![](http://rapptz.github.io/doxydoc/images/templateclass.gif)
@@ -67,10 +63,10 @@ A couple things from DocBlockr are lacking though, which you can find in the TOD
 
 ## Issues and Limitations
 
-C++ is notoriously hard to parse, so it'll be insane to say that this so-called parser is perfect as it is far from it. 
+C++ is notoriously hard to parse, so it'll be insane to say that this so-called parser is perfect as it is far from it.
 Occasional bugs are sure to pop up every so often, which is why I made this to be as simple as possible. Since the "parser" is
 essentially a bunch of regex under the hood, some abnormalities are bound to pop up because I chose to take part in two
-problems rather than one. 
+problems rather than one.
 
 Limitations are mostly involving template parameters and some complex functions. I also haven't tried function pointers in
 function arguments, so that will most likely be faulty as well. You are free to open up an issue in the issue
