@@ -1,0 +1,12 @@
+Hello.
+
+Thanks for installing this package. This package was made to help make
+the hassle of making doxygen documentation a little bit easier. There
+were many plug-ins that did this for other languages, but there weren't
+many that did it for C++ properly. Many failed when handling templates.
+As a result, this package was made with high inspiration from the other
+popular documentation package, DocBlockr.
+
+If you find any bugs, which are sure to show up due to the imperfections
+of parsing C++ with regex, please notify me on the GitHub page:
+https://github.com/Rapptz/DoxyDoc
