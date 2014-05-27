@@ -26,9 +26,13 @@ def read_line(view, point):
     return view.substr(next_line)
 
 def get_function_args(fn_str):
+    print('Before: {0}'.format(fn_str))
     # Remove references and pointers
     fn_str = fn_str.replace("&", "")
     fn_str = fn_str.replace("*", "")
+
+    # Remove va_list and variadic templates
+    fn_str = fn_str.replace("...", "")
 
     # Remove cv-qualifiers
     fn_str = re.sub(r"(?:const|volatile)\s*", "", fn_str)
@@ -44,6 +48,7 @@ def get_function_args(fn_str):
 
     # Remove arrays
     fn_str = re.sub(r"\[.*\]", "", fn_str)
+    print('After: {0}'.format(fn_str))
 
     arg_regex = r"(?P<type>[a-zA-Z_]\w*)\s*(?P<name>[a-zA-Z_]\w*)"
 
@@ -94,11 +99,12 @@ class DoxydocCommand(sublime_plugin.TextCommand):
                 sublime.status_message("DoxyDoc: Unable to retrieve snippet")
 
     def retrieve_snippet(self, view):
+        print('okay?')
         point = view.sel()[0].begin()
-        max_lines = 25 # maximum amount of lines to parse functions with
+        max_lines = 5 # maximum amount of lines to parse functions with
         current_line = read_line(view, point)
         if not current_line or current_line.find("/**") == -1:
-            # Strange bug.. 
+            # Strange bug..
             return "\n * ${0}\n */"
 
         point += len(current_line) + 1
@@ -261,5 +267,5 @@ class DoxydocCommand(sublime_plugin.TextCommand):
             snippet += "\n * {0}return ${{{1}:[description]}}".format(self.command_type, index)
 
         snippet += "\n */"
-        return snippet    
+        return snippet
 
