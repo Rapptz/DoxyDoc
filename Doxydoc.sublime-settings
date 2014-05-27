@@ -3,5 +3,9 @@
 
     // if set to true, the commands will be prefixed with @
     // otherwise they will be prefixed with \
-    "javadoc": false
+    "javadoc": false,
+
+    // the maximum amount of lines to parse to retrieve
+    // all the parameters of a function or class
+    "max_lines": 5
 }

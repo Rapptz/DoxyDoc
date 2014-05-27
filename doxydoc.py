@@ -11,12 +11,15 @@ def get_setting(key, default=None):
 setting = get_setting
 
 def get_template_args(templates):
+    print('Before: {0}'.format(templates))
     # Strip decltype statements
     templates = re.sub(r"decltype\(.+\)", "", templates)
     # Strip default parameters
     templates = re.sub(r"\s*=\s*.+,", ",", templates)
     # Strip type from template
-    return re.split(r",\s*", re.sub(r"[A-Za-z_][\w.<>]*\s+([A-Za-z_][\w.<>]*)", r"\1", templates))
+    templates = re.sub(r"[A-Za-z_][\w.<>]*\s+([A-Za-z_][\w.<>]*)", r"\1", templates)
+    print('After: {0}'.format(templates))
+    return re.split(r",\s*", templates)
 
 def read_line(view, point):
     if (point >= view.size()):
@@ -99,9 +102,8 @@ class DoxydocCommand(sublime_plugin.TextCommand):
                 sublime.status_message("DoxyDoc: Unable to retrieve snippet")
 
     def retrieve_snippet(self, view):
-        print('okay?')
         point = view.sel()[0].begin()
-        max_lines = 5 # maximum amount of lines to parse functions with
+        max_lines = setting("max_lines", 5)
         current_line = read_line(view, point)
         if not current_line or current_line.find("/**") == -1:
             # Strange bug..
