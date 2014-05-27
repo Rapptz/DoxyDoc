@@ -216,7 +216,7 @@ class DoxydocCommand(sublime_plugin.TextCommand):
         # Function arguments
         args = regex_obj.group("args")
 
-        if args and args != "void":
+        if args and args.lower() != "void":
             args = get_function_args(args)
             for type, name in args:
                 if type in template_args:
@@ -245,7 +245,7 @@ class DoxydocCommand(sublime_plugin.TextCommand):
 
         args = regex_obj.group("args")
 
-        if args and args != "void":
+        if args and args.lower() != "void":
             snippet += "\n * "
             args = get_function_args(args)
             for _, name in args:
