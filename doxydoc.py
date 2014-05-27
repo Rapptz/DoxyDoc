@@ -146,13 +146,13 @@ class DoxydocCommand(sublime_plugin.TextCommand):
                 return self.template_function_snippet(reconstr, template_args)
 
             # Check if it's a templated function
-            refun = re.search(self.regexp["function"], function_line)
+            refun = re.match(self.regexp["function"], function_line)
 
             if refun:
                 return self.template_function_snippet(refun, template_args)
 
             # Check if it's a templated class
-            reclass = re.search(self.regexp["class"], second_line)
+            reclass = re.match(self.regexp["class"], second_line)
 
             if reclass:
                 return self.template_snippet(template_args)
