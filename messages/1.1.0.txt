@@ -1,0 +1,17 @@
+====================
+     Change-log
+====================
+
+Thanks for downloading this package!
+
+Changes from v1.0.3 to v1.1.0 include:
+
+- Fix bug that made classes be rendered as functions sometimes.
+- Removed extraneous @relates input since Doxygen does this automatically.
+- Add new setting for the maximum number of lines to parse.
+- Maximum number of lines has changed from 25 to 5.
+- Fix bug when function parameters involved a variadic template.
+
+
+As always, if you find any bugs or would like to submit a patch, make sure
+to look at the repository on GitHub: https://github.com/Rapptz/DoxyDoc
