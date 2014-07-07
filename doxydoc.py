@@ -262,3 +262,43 @@ class DoxydocCommand(sublime_plugin.TextCommand):
         snippet += "\n */"
         return snippet
 
+class DoxygenCompletions(sublime_plugin.EventListener):
+    def __init__(self):
+        self.command_type = '@' if setting('javadoc', True) else '\\'
+
+    def default_completion_list(self):
+        return [('author',        'author ${1:[author]}'),
+                ('deprecated',    'deprecated ${1:[deprecated-text]}'),
+                ('exception',     'exception ${1:[exception-object]} ${2:[description]}'),
+                ('param',         'param ${1:[parameter-name]} ${2:[description]}'),
+                ('return',        'return ${1:[description]}'),
+                ('see',           'see ${1:[reference]}'),
+                ('since',         'since ${1:[since-text]}'),
+                ('throws',        'throws ${1:[exception-object]} ${2:[description]}'),
+                ('version',       'version ${1:[version-text]}'),
+                ('code',          'code \n* ${0:[text]}\n* @endcode'),
+                ('bug',           'bug ${1:[bug-text]}'),
+                ('details',       'details ${1:[detailed-text]}'),
+                ('warning',       'warning ${1:[warning-message]}'),
+                ('todo',          'todo ${1:[todo-text]}'),
+                ('defgroup',      'defgroup ${1:[group-name]} ${2:[group-title]}'),
+                ('ingroup',       'ingroup ${1:[group-name]...}'),
+                ('addtogroup',    'addtogroup ${1:[group-name]} ${2:[group-title]}'),
+                ('weakgroup',     'weakgroup ${1:[group-name]} ${2:[group-title]}')]
+
+    def on_query_completions(self, view, prefix, locations):
+        # Only trigger within comments
+        if not view.match_selector(locations[0], 'comment'):
+            return []
+
+        pt = locations[0] - len(prefix) - 1
+        # Get character before
+        ch = view.substr(sublime.Region(pt, pt + 1))
+
+        flags = sublime.INHIBIT_WORD_COMPLETIONS | sublime.INHIBIT_EXPLICIT_COMPLETIONS
+
+        # Character given isn't \ or @
+        if ch != self.command_type:
+            return ([], flags)
+
+        return (self.default_completion_list(), flags)
