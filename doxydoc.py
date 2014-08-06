@@ -82,11 +82,11 @@ class DoxydocCommand(sublime_plugin.TextCommand):
             "function": function_identifiers + r"(?P<return>(?:typename\s*)?[\w:<>]+)?\s*"
                                                r"(?P<subname>[A-Za-z_]\w*::)?"
                                                r"(?P<name>operator\s*.{1,2}|[A-Za-z_:]\w*)\s*"
-                                               r"\((?P<args>[:<>\[\]\(\),.*&\w\s]*)\).+",
+                                               r"\((?P<args>[:<>\[\]\(\),.*&\w\s=]*)\).+",
 
             "constructor": function_identifiers + r"(?P<return>)" # dummy so it doesn't error out
                                                   r"~?(?P<name>[a-zA-Z_]\w*)(?:\:\:[a-zA-Z_]\w*)?"
-                                                  r"\((?P<args>[:<>\[\]\(\),.*&\w\s]*)\).+"
+                                                  r"\((?P<args>[:<>\[\]\(\),.*&\w\s=]*)\).+"
         }
 
     def write(self, view, string):
