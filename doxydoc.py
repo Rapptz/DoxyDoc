@@ -44,13 +44,13 @@ def get_function_args(fn_str):
     fn_str = re.sub(r"\w+::", "", fn_str)
 
     # Remove template arguments in types
-    fn_str = re.sub(r"([a-zA-Z_]\w*)\s*<.+>", r"\1", fn_str)
+    fn_str = re.sub(r"([a-zA-Z_]\w*)\s*<.+?>", r"\1", fn_str)
 
     # Remove parentheses
-    fn_str = re.sub(r"\((.*)\)", r"\1", fn_str)
+    fn_str = re.sub(r"\((.*?)\)", r"\1", fn_str)
 
     # Remove arrays
-    fn_str = re.sub(r"\[.*\]", "", fn_str)
+    fn_str = re.sub(r"\[.*?\]", "", fn_str)
     print('After: {0}'.format(fn_str))
 
     arg_regex = r"(?P<type>[a-zA-Z_]\w*)\s*(?P<name>[a-zA-Z_]\w*)"
